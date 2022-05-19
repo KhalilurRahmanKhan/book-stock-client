@@ -1,4 +1,5 @@
 import Banner from '../../components/Banner/Banner';
+import Clients from '../../components/Clients/Clients';
 import Footer from '../../components/Footer/Footer';
 import Items from '../../components/Items/Items';
 import Navbar from '../../components/Navbar/Navbar';
@@ -10,6 +11,7 @@ function Home() {
     <Navbar></Navbar>
     <Banner></Banner>
     <Items></Items>
+    <Clients></Clients>
     <Footer></Footer>
     </div>
   );

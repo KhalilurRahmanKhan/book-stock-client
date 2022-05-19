@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import './navbar.css';
 
 function Navbar() {
@@ -18,7 +19,7 @@ function Navbar() {
         </ul>
 
            
-            <button className="btn btn-outline-light" type="submit">Login</button>
+            <Link className="btn btn-outline-light" to="login">Login</Link>
         
         
         </div>

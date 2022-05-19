@@ -7,17 +7,17 @@ function Contact() {
             <h3 className="text-center mb-5">Contact Us</h3>
 
             <div className="col-md-5 contact ">
-            <div class="form-floating">
-                <input type="email" class="form-control" />
+            <div className="form-floating">
+                <input type="email" className="form-control" />
                 <label >Email</label>
                 </div><br />
                 
-                <div class="form-floating">
+                <div className="form-floating">
                 <textarea rows='10' className='form-control text-area' ></textarea>
                 <label >Comments</label>
                 </div><br />
                 <div className='text-end'>
-                <button class=" btn btn-primary float-left" type="submit">Submit</button>
+                <button className=" btn btn-primary float-left" type="submit">Submit</button>
                 </div>
               
             </div>

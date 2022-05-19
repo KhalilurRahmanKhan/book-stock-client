@@ -3,3 +3,12 @@
     height: calc(100vh - 50px);
     object-fit: cover;
 }
+
+.title{
+    color: aliceblue;
+    position: absolute;
+    border: 2px solid aliceblue;
+    padding: 10px;
+    top: 45vh;
+    left: 40%;
+}

@@ -1,5 +1,5 @@
 import './login.css';
-import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { useSendPasswordResetEmail, useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.config';
 import toast, { Toaster } from 'react-hot-toast';
 import { useState } from 'react';
@@ -17,8 +17,11 @@ function Login() {
 
   const [signInWithGoogle] = useSignInWithGoogle(auth);
 
+  const [sendPasswordResetEmail, sending] = useSendPasswordResetEmail(auth);
+
 
   const showError = () => toast(error.message);
+  const sentEmail = () => toast("Email sent");
 
   if (error) {
     showError();
@@ -56,6 +59,14 @@ function Login() {
             </button>
             <button className="w-100 btn btn-lg btn-success mb-3"  onClick={() => 
             signInWithGoogle(email, password)}>Login with Google</button>
+
+            <div className="text-center">
+            <button className='btn btn-link  btn-sm' onClick={async () => {
+                await sendPasswordResetEmail(email);
+                sentEmail();
+              }}><i>Reset Password</i></button>
+            </div>
+
             <Toaster></Toaster>
 
         </div>

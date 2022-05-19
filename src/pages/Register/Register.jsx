@@ -1,14 +1,17 @@
 import { useState } from 'react';
 import './register.css';
-import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useCreateUserWithEmailAndPassword, useSendEmailVerification } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.config';
 import toast, { Toaster } from 'react-hot-toast';
+import { signOut } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
 
 
 
 function Register() {
   const [email,setEmail] = useState('');
   const [password,setPassword] = useState('');
+  const navigate = useNavigate();
   const [
     createUserWithEmailAndPassword,
     user,
@@ -16,6 +19,15 @@ function Register() {
     error,
   ] = useCreateUserWithEmailAndPassword(auth);
 
+  const [sendEmailVerification,] = useSendEmailVerification(auth);
+
+  if(user){
+    sendEmailVerification();
+    signOut(auth);
+    navigate('/register');
+  }
+
+ 
   const showError = () => toast(error.message);
 
   if (error) {
@@ -43,7 +55,7 @@ function Register() {
             <label>Password</label>
             </div>
 
-            <button className="w-100 btn btn-lg btn-primary mb-3"onClick={() => createUserWithEmailAndPassword(email, password)}>
+            <button className="w-100 btn btn-lg btn-primary mb-3"onClick={()=>createUserWithEmailAndPassword(email,password)}>
              {
              loading ?
               <div class="spinner-border text-light" role="status">

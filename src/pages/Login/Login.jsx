@@ -17,11 +17,20 @@ function Login() {
 
   const [signInWithGoogle] = useSignInWithGoogle(auth);
 
-  const [sendPasswordResetEmail, sending] = useSendPasswordResetEmail(auth);
+  const [sendPasswordResetEmail, sending ,resetError] = useSendPasswordResetEmail(auth);
 
 
   const showError = () => toast(error.message);
-  const sentEmail = () => toast("Email sent");
+  const sentEmail = () => toast("Reset email sent");
+
+  if (resetError) {
+    toast(resetError.message);
+  }
+ 
+  if (sending) {
+    toast("Sending...");
+  }
+   
 
   if (error) {
     showError();
@@ -62,9 +71,8 @@ function Login() {
 
             <div className="text-center">
             <button className='btn btn-link  btn-sm' onClick={async () => {
-                await sendPasswordResetEmail(email);
-                sentEmail();
-              }}><i>Reset Password</i></button>
+              await sendPasswordResetEmail(email);
+               }}><i>Reset Password</i></button>
             </div>
 
             <Toaster></Toaster>

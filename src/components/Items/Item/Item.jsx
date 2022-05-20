@@ -1,4 +1,5 @@
 
+import { Link } from 'react-router-dom';
 import './item.css';
 
 function Item() {
@@ -15,7 +16,7 @@ function Item() {
         <small>price</small><br />
     </div>
     <div className="card-footer text-muted">
-    <a href="fdsf" className="btn btn-primary">Manage</a>
+    <Link to="inventory/:id" className="btn btn-primary">Manage</Link>
     </div>
     </div>
 </div>

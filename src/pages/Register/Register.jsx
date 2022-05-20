@@ -25,16 +25,11 @@ function Register() {
   await createUserWithEmailAndPassword(email,password);
 
 
-    sendEmailVerification();
+   await sendEmailVerification();
     toast("Verification email sent");
-
-
-  if(user.emailVerified === true){
-    navigate('/');
-  }
-  else{
+ 
     signOut(auth);
-  }
+  
 
  }
  

@@ -3,11 +3,14 @@ import { useSendPasswordResetEmail, useSignInWithEmailAndPassword, useSignInWith
 import auth from '../../firebase.config';
 import toast, { Toaster } from 'react-hot-toast';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { signOut } from 'firebase/auth';
 
 
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
     const [
       signInWithEmailAndPassword,
       user,
@@ -18,6 +21,22 @@ function Login() {
   const [signInWithGoogle] = useSignInWithGoogle(auth);
 
   const [sendPasswordResetEmail, sending ,resetError] = useSendPasswordResetEmail(auth);
+
+
+  const handleLogin = async () => {
+    await signInWithEmailAndPassword(email,password);
+
+    if(user.user.emailVerified === true){
+      navigate('/');
+
+    }
+    else{
+      signOut(auth);
+    }
+  }
+
+
+  
 
 
   const showError = () => toast(error.message);
@@ -58,16 +77,16 @@ function Login() {
             <label>Password</label>
             </div>
 
-            <button className="w-100 btn btn-lg btn-primary mb-3" onClick={() => 
-            signInWithEmailAndPassword(email, password)}>
+            <button className="w-100 btn btn-lg btn-primary mb-3" onClick={handleLogin}>
              {
              loading ?
-              <div class="spinner-border text-light" role="status">
-              <span class="visually-hidden">Loading...</span></div> : "Login"
+              <div className="spinner-border text-light" role="status">
+              <span className="visually-hidden">Loading...</span></div> : "Login"
              }
             </button>
-            <button className="w-100 btn btn-lg btn-success mb-3"  onClick={() => 
-            signInWithGoogle(email, password)}>Login with Google</button>
+            <button className="w-100 btn btn-lg btn-success mb-3"  onClick={async () => {
+            await signInWithGoogle(email, password);
+            }}>Login with Google</button>
 
             <div className="text-center">
             <button className='btn btn-link  btn-sm' onClick={async () => {

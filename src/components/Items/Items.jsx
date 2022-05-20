@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import Item from './Item/Item';
 import './items.css';
 
@@ -12,6 +13,11 @@ function Items() {
           <Item></Item> 
           <Item></Item> 
           <Item></Item> 
+         
+          <div className='text-center mt-5'>
+            <Link className="btn btn-success" to='manage/inventory'>Manage Inventory</Link>
+          </div>
+     
         </div>
     </div>
   );

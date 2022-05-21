@@ -7,7 +7,7 @@ import { Route, Routes } from 'react-router-dom';
 import Inventory from './pages/Inventory/Inventory';
 import RequireAuth from './RequireAuth';
 import Inventories from './pages/Inventories/Inventories';
-import AddInventory from './components/AddInventory/AddInventory';
+import AddInventory from './pages/AddInventory/AddInventory';
 
 function App() {
   return (
@@ -17,7 +17,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="inventory/:id" element={ <RequireAuth><Inventory/></RequireAuth>} />
         <Route path="manage/inventory" element={ <RequireAuth><Inventories/></RequireAuth>} />
-        <Route path="add/inventory" element={ <RequireAuth><AddInventory/></RequireAuth>} />
+        <Route path="manage/inventory/add/inventory" element={ <RequireAuth><AddInventory/></RequireAuth>} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
       </Routes>

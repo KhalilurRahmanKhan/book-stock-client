@@ -1,9 +1,10 @@
+import { Link } from 'react-router-dom';
 import './inventories.css';
 
 function Inventories() {
   return (
     <div className="inventories container mt-4"> 
-    <button className='btn btn-primary mb-3'>Add new item</button>
+    <Link to="add/inventory" className='btn btn-primary mb-3'>Add new item</Link>
         <table className="table">
   <thead>
     <tr>

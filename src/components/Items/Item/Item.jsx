@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import './item.css';
 
 function Item() {
+  const text = 'With supporting text below as a natural lead-in to additional content.';
   return (
     <div className="col-md-4 mt-3"><div className="card text-center">
     <div className="card-header">
@@ -10,7 +11,7 @@ function Item() {
     </div>
     <div className="card-body">
         <img src="https://i.ibb.co/1ZcN5cq/download.png" alt="" />
-        <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        <p className="card-text">{text.substring(0,50)}</p>
         <small>Supplier</small><br />
         <small>quantity</small><br />
         <small>price</small><br />

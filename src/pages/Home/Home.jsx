@@ -5,11 +5,11 @@ import Footer from '../../components/Footer/Footer';
 import Items from '../../components/Items/Items';
 import './home.css';
 
-function Home() {
+function Home({items}) {
   return (
     <div className="home">
     <Banner></Banner>
-    <Items></Items>
+    <Items items={items} ></Items>
     <Clients></Clients>
     <Contact></Contact>
     <Footer></Footer>

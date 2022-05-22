@@ -1,17 +1,20 @@
 import { useEffect, useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link } from 'react-router-dom';
-import './inventories.css';
+import auth from '../../firebase.config';
+import './myitems.css';
 import toast, { Toaster } from 'react-hot-toast';
 
 
-function Inventories() {
+function MyItems() {
   const[items,setItems] = useState([]);
+  const [user] = useAuthState(auth);
 
   useEffect(()=>{
-    fetch("http://localhost:5000/")
+    fetch(`http://localhost:5000?email=${user.email}`)
     .then(res=>res.json())
     .then(data=>setItems(data))
-  },[items]);
+  },[user.email,items]);
 
   const handleDelete = (id)=>{
     if (window.confirm("Do you really want to delete?")) {
@@ -24,12 +27,11 @@ function Inventories() {
     toast("Inventory deleted successfully");
     }
    
-
+  
   }
 
   return (
-    <div className="inventories container mt-4"> 
-    <Link to="add/inventory" className='btn btn-primary mb-3'>Add new item</Link>
+    <div className="myitems container mt-4"> 
         <table className="table">
   <thead>
     <tr>
@@ -64,4 +66,4 @@ function Inventories() {
   );
 }
 
-export default Inventories;
+export default MyItems;

@@ -19,10 +19,30 @@ function Navbar() {
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li className="nav-item">
+        <li className="nav-item">
             <Link className="nav-link active" aria-current="page" to='/'>Home</Link>
-            </li>   
-        </ul>
+            </li>  
+       {
+         user &&
+         <>
+         <li className="nav-item">
+            <Link className="nav-link active" aria-current="page" to='myitems'>My items</Link>
+            </li> 
+         <li className="nav-item">
+            <Link className="nav-link active" aria-current="page" to='/manage/inventory'>Manage items</Link>
+            </li> 
+         <li className="nav-item">
+            <Link className="nav-link active" aria-current="page" to='/manage/inventory/add/inventory'>Add item</Link>
+            </li> 
+            </>
+
+       }
+        <li className="nav-item">
+            <Link className="nav-link active" aria-current="page" to='blogs'>Blogs</Link>
+            </li>  
+          </ul> 
+         
+        
         <Link className="btn btn-outline-primary" style={{margin:'5px',}} to="register">Register</Link>
         {
           user ? <button className="btn btn-outline-success"  onClick={logout}>Logout</button> :

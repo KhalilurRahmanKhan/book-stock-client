@@ -9,6 +9,9 @@ import RequireAuth from './RequireAuth';
 import Inventories from './pages/Inventories/Inventories';
 import AddInventory from './pages/AddInventory/AddInventory';
 import { useEffect, useState } from 'react';
+import MyItems from './pages/MyItems/MyItems';
+import Blogs from './pages/Blogs/Blogs';
+import NotFound from './pages/NotFound/NotFound';
 
 function App() {
 
@@ -30,9 +33,12 @@ function App() {
         <Route path="/" element={<Home items={items}  />} />
         <Route path="inventory/:id" element={ <RequireAuth><Inventory/></RequireAuth>} />
         <Route path="manage/inventory" element={ <RequireAuth><Inventories/></RequireAuth>} />
+        <Route path="myitems" element={ <RequireAuth><MyItems/></RequireAuth>} />
         <Route path="manage/inventory/add/inventory" element={ <RequireAuth><AddInventory/></RequireAuth>} />
         <Route path="login" element={<Login />} />
+        <Route path="blogs" element={<Blogs />} />
         <Route path="register" element={<Register />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
   );

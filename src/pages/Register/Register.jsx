@@ -1,77 +1,96 @@
 import { useState } from 'react';
 import './register.css';
-import { useCreateUserWithEmailAndPassword, useSendEmailVerification } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.config';
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { signOut } from 'firebase/auth';
+import { createUserWithEmailAndPassword, sendEmailVerification, signOut } from 'firebase/auth';
 
 
 
 function Register() {
-  const [email,setEmail] = useState('');
-  const [password,setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const navigate = useNavigate();
-  const [
-    createUserWithEmailAndPassword,
-    user,
-    loading,
-    error,
-  ] = useCreateUserWithEmailAndPassword(auth);
-
-  const [sendEmailVerification, sending, verificationError] = useSendEmailVerification(auth);
-
- const handleRegister = async () => {
-  await createUserWithEmailAndPassword(email,password);
 
 
-   await sendEmailVerification();
-    toast("Verification email sent");
- 
-    signOut(auth);
+  function handleSendEmailVerification(){
+    sendEmailVerification(auth.currentUser)
+  .then(() => {
   
+    toast("Email verification sent!");
 
- }
- 
-  const showError = () => toast(error.message);
-
-  if (error) {
-    showError();
+  
+  });
   }
+
+
+
+ function handleRegister(){
+createUserWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+
+
+    handleSendEmailVerification();
+    setEmail('');
+    setPassword('');
+
+    if(user.emailVerified === true){
+      navigate('/');
+    }
+    else{
+      signOut(auth).then(() => {
+          }).catch((error) => {
+          });
+    }
+
+  })
+  .catch((error) => {
+    setError(error.message);
+
+  
+  });
+ }
+
+
+
+
+
+
+
   return (
-        <div className="register">
-         
-            <h3 className='text-center mb-3'>Register</h3>
-            <div className="form-floating">
-            <input className="form-control"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <label>Email</label>
-            </div>
-            
-            <div className="form-floating">
-            <input className="form-control"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <label>Password</label>
-            </div>
+    <div className="register">
 
-            <button className="w-100 btn btn-lg btn-primary mb-3"onClick={handleRegister}>
-             {
-             loading ?
-              <div className="spinner-border text-light" role="status">
-              <span className="visually-hidden">Loading...</span></div> : "Register"
-             }
-            </button>
-            <Toaster></Toaster>
-            
-         
+      <h3 className='text-center mb-3'>Register</h3>
+      <div className="form-floating">
+        <input className="form-control"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <label>Email</label>
+      </div>
 
-        </div>
+      <div className="form-floating">
+        <input className="form-control"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <label>Password</label>
+      </div>
+
+      <button className="w-100 btn btn-lg btn-primary mb-3" onClick={handleRegister}>
+      Register
+      </button>
+      <small className="text-danger">{error}</small>
+      <Toaster></Toaster>
+
+
+
+    </div>
   );
 }
 

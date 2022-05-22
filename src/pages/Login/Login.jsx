@@ -1,59 +1,70 @@
 import './login.css';
-import { useSendPasswordResetEmail, useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.config';
 import toast, { Toaster } from 'react-hot-toast';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { signOut } from 'firebase/auth';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { GoogleAuthProvider, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
+
 
 
 function Login() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const navigate = useNavigate();
-    const [
-      signInWithEmailAndPassword,
-      user,
-      loading,
-      error,
-    ] = useSignInWithEmailAndPassword(auth);
+    
+  const [error, setError] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState(''); 
 
-  const [signInWithGoogle] = useSignInWithGoogle(auth);
+  const provider = new GoogleAuthProvider();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const [sendPasswordResetEmail, sending ,resetError] = useSendPasswordResetEmail(auth);
+const from = location.state?.from?.pathname || '/';
 
 
-  const handleLogin = async () => {
-    await signInWithEmailAndPassword(email,password);
 
-    if(user.user.emailVerified === true){
-      navigate('/');
+    function handleLogin(){
+      signInWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    if(userCredential.user.emailVerified === true){
 
+      navigate(from,{replace:true});
     }
     else{
-      signOut(auth);
+      signOut(auth).then(() => {
+    }).catch((error) => {
+    });
+      setError('Email is not verified');
     }
-  }
+  })
+  .catch((error) => {
+    setError(error.message);
+  });
 
+  setEmail('');
+    setPassword('');
+    }
 
-  
+    function handleGoogleLogin(){
+      signInWithPopup(auth, provider)
+      .then((result) => {  
+        navigate(from,{replace:true});    
+      }).catch((error) => {
+        setError(error.message);
+      });
+     }
+function handleResetPassword(){
+  sendPasswordResetEmail(auth, email)
+  .then(() => {
 
-
-  const showError = () => toast(error.message);
-  const sentEmail = () => toast("Reset email sent");
-
-  if (resetError) {
-    toast(resetError.message);
-  }
+    toast("Password reset email sent!");
  
-  if (sending) {
-    toast("Sending...");
-  }
-   
+  })
+  .catch((error) => {
+  
+    const errorMessage = error.message;
+    setError(errorMessage);
 
-  if (error) {
-    showError();
-  }
+  });
+}
   
   return (
    <div className="container">
@@ -77,21 +88,12 @@ function Login() {
             <label>Password</label>
             </div>
 
-            <button className="w-100 btn btn-lg btn-primary mb-3" onClick={handleLogin}>
-             {
-             loading ?
-              <div className="spinner-border text-light" role="status">
-              <span className="visually-hidden">Loading...</span></div> : "Login"
-             }
-            </button>
-            <button className="w-100 btn btn-lg btn-success mb-3"  onClick={async () => {
-            await signInWithGoogle(email, password);
-            }}>Login with Google</button>
+            <button className="w-100 btn btn-lg btn-primary mb-3" onClick={handleLogin}>Login</button>
+            <small className="text-danger">{error}</small>
+            <button className="w-100 btn btn-lg btn-success mb-3"  onClick={handleGoogleLogin}>Login with Google</button>
 
             <div className="text-center">
-            <button className='btn btn-link  btn-sm' onClick={async () => {
-              await sendPasswordResetEmail(email);
-               }}><i>Reset Password</i></button>
+            <button className='btn btn-link  btn-sm' onClick={handleResetPassword}><i>Reset Password</i></button>
             </div>
 
             <Toaster></Toaster>

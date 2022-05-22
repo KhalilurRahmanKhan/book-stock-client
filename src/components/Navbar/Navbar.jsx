@@ -43,10 +43,13 @@ function Navbar() {
           </ul> 
          
         
-        <Link className="btn btn-outline-primary" style={{margin:'5px',}} to="register">Register</Link>
+        
         {
           user ? <button className="btn btn-outline-success"  onClick={logout}>Logout</button> :
+          <>
+          <Link className="btn btn-outline-primary" style={{margin:'5px',}} to="register">Register</Link>
           <Link className="btn btn-outline-success" to="login">Login</Link>
+          </>
         }
         </div>
     </div>

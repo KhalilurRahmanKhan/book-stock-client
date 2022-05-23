@@ -17,7 +17,7 @@ function AddInventory() {
   const [user] = useAuthState(auth);
 
   const handleAdd = () => {
-    fetch('http://localhost:5000/add/inventory', {
+    fetch('https://fast-plains-40860.herokuapp.com/add/inventory', {
       method: "POST",
       headers: {
         "Content-type": "application/json",

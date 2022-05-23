@@ -8,15 +8,15 @@ function Inventories() {
   const[items,setItems] = useState([]);
 
   useEffect(()=>{
-    fetch("http://localhost:5000/")
+    fetch("https://fast-plains-40860.herokuapp.com/")
     .then(res=>res.json())
     .then(data=>setItems(data))
   },[items]);
 
   const handleDelete = (id)=>{
     if (window.confirm("Do you really want to delete?")) {
-      console.log('http://localhost:5000/delete/inventory/'+id);
-    fetch('http://localhost:5000/delete/inventory/'+id, {
+      console.log('https://fast-plains-40860.herokuapp.com/delete/inventory/'+id);
+    fetch('https://fast-plains-40860.herokuapp.com/delete/inventory/'+id, {
       method: "Delete",
     })
     .then(res => res.json())

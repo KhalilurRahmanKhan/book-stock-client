@@ -10,14 +10,14 @@ function Inventory() {
   const[stock,setStock] = useState();
 
   useEffect(()=>{
-    fetch("http://localhost:5000/inventory/"+id)
+    fetch("https://fast-plains-40860.herokuapp.com/inventory/"+id)
     .then(res=>res.json())
     .then(data=>setItem(data))
   },[id,item]);
 
   const handleDeliver = ()=>{
     let quantity = item.quantity-1;
-    fetch('http://localhost:5000/update/inventory/'+id, {
+    fetch('https://fast-plains-40860.herokuapp.com/update/inventory/'+id, {
       method: "PUT",
       headers: {
         "Content-type": "application/json",
@@ -30,7 +30,7 @@ function Inventory() {
 
   const handleStock = ()=>{
     let quantity = item.quantity+parseInt(stock);
-    fetch('http://localhost:5000/update/inventory/'+id, {
+    fetch('https://fast-plains-40860.herokuapp.com/update/inventory/'+id, {
       method: "put",
       headers: {
         "Content-type": "application/json",

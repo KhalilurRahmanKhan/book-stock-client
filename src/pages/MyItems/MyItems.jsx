@@ -11,7 +11,7 @@ function MyItems() {
   const [user] = useAuthState(auth);
 
   useEffect(()=>{
-    fetch(`http://localhost:5000?email=${user.email}`)
+    fetch(`https://fast-plains-40860.herokuapp.com?email=${user.email}`)
     .then(res=>res.json())
     .then(data=>setItems(data))
   },[user.email,items]);

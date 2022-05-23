@@ -21,7 +21,7 @@ function App() {
     fetch("https://fast-plains-40860.herokuapp.com/inventory")
     .then(res=>res.json())
     .then(data=>setItems(data))
-  },[]);
+  },[items]);
   
 
  
